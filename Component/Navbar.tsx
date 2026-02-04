@@ -1,56 +1,30 @@
-// import React from "react";
-// import Image from "next/image";
-// export default function Navbar() {
-//   return (
-//     <nav className="w-full bg-white/50 backdrop-blur-md dark:bg-black/50 border-b border-black/[.08] dark:border-white/[.145]">
-//       <div className="mx-auto flex h-16 max-w-3xl items-center px-4 sm:px-16 flex-col">
-//         <span className="text-lg font-semibold text-black dark:text-zinc-50">
-//           MyApp
-//         </span>
-//         <Image
-//           className="ml-auto "
-//           src="/JAVASCRIPT LOGO.png"
-//           alt="Next.js logo"
-//           width={100}
-//           height={20}
-//           priority
-//         />
-//       </div>
-//     </nav>
-//   );
-// }
-"use client"; // Required because we are using a Hook (usePathname)
+"use client";
 
-import Link from "next/link";
+import React from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-
+import { Bell } from "lucide-react";
 export default function Navbar() {
-  const pathname = usePathname();
-
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Users", href: "/users" },
-  ];
-
   return (
-    <nav className="flex gap-6 p-4 border-b">
-      {navLinks.map((link) => {
-        // Check if the current path matches the link
-        const isActive = pathname === link.href;
+    <nav className="w-full bg-[#21407d70] p-5 flex items-center justify-center lg:justify-between">
+      <Image
+        className="pl-5 "
+        src="/Group.png"
+        alt="Next.js logo"
+        width={150}
+        height={20}
+        priority
+      />
 
-        return (
-          <Link
-            key={link.name}
-            href={link.href}
-            className={`${
-              isActive ? "text-blue-600 font-bold" : "text-gray-500"
-            } hover:text-blue-400 transition-colors`}
-          >
-            {link.name}
-          </Link>
-        );
-      })}
+      <input
+        type="text"
+        placeholder="Search for anything"
+        className="w-full max-w-md px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#213f7d] focus:border-transparent transition"
+      />
+      <div className="flex gap-5 items-center">
+        <h1>Docs</h1>
+        <Bell size={20} className="mr-5" />
+      </div>
     </nav>
   );
 }
