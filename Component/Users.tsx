@@ -1,8 +1,35 @@
+"use client";
+
 import React from "react";
 import UserData from "./UserData";
 import { Filter } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 export default function Users() {
+  const [users, setUsers] = useState(UserData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
+
+  const filterByStatus = (status: string) => {
+    const filteredUsers = UserData.filter((user) => user.status === status);
+    setUsers(filteredUsers);
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = UserData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(UserData.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   interface User {
     index: number;
     userName: string;
@@ -60,23 +87,56 @@ export default function Users() {
         </tr>
       </thead>
       <tbody>
-        {UserData.map((user: User) => (
+        {currentItems.map((user: User) => (
           <tr
             key={user.index}
-            className=" border-b-2 border-[#213F7D1A] hover:bg-amber-50 text-[#213F7D]"
+            className=" border-b-2 border-[#213F7D1A] hover:bg-[#21407d45] text-[#213F7D]"
           >
             <td className="px-2 py-4"> {user.orgName}</td>
             <td className="px-2 py-4">{user.userName}</td>
             <td className="px-2 py-4"> {user.email}</td>
             <td className="px-2 py-4"> {user.phoneNumber}</td>
             <td className="px-2 py-4"> {user.lastActiveDate}</td>
-            <td className="bg-amber-300 p-1 rounded-full text-center">
-              {" "}
-              {user.status}
+            <td className="px-2 py-4">
+              <span
+                className={`
+                  px-4 py-1 rounded-full text-sm
+                  ${user.status === "Active" ? "bg-green-100 text-green-700" : ""}
+                  ${user.status === "Inactive" ? "bg-slate-100 text-slate-700" : ""}
+                  ${user.status === "Pending" ? "bg-amber-100 text-amber-700" : ""}
+                  ${user.status === "Blacklisted" ? "bg-red-100 text-red-700" : ""}
+                `}
+              >
+                {user.status}
+              </span>
             </td>
           </tr>
         ))}
       </tbody>
+      <tfoot>
+        <tr>
+          <td colSpan={6} className="py-2">
+            <div className="flex justify-end w-full">
+              <button
+                onClick={handlePreviousPage}
+                disabled={currentPage === 1}
+                className="px-4 py-2 m-2 bg-[#213F7D] text-white rounded disabled:bg-gray-300 disabled:text-gray-500 cursor-pointer"
+              >
+                Previous
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={
+                  currentPage === Math.ceil(UserData.length / itemsPerPage)
+                }
+                className="px-4 py-2 m-2 bg-[#213F7D] text-white rounded disabled:bg-gray-300 disabled:text-gray-500 cursor-pointer"
+              >
+                Next
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
     </table>
   );
 }

@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { Bell } from "lucide-react";
 export default function Navbar() {
   return (
-    <nav className="w-full bg-[#21407d70] p-5 flex items-center justify-center lg:justify-between">
+    <nav className="w-full bg-[#213F7D] p-5 flex items-center justify-center lg:justify-between">
       <Image
-        className="pl-5 "
+        className="p-2 bg-white rounded-sm"
         src="/Group.png"
         alt="Next.js logo"
         width={150}
