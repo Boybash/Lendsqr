@@ -1,13 +1,16 @@
 "use client";
 
 import React from "react";
-import UserData from "./UserData";
+import UserData from "../UserData";
 import { Filter } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function Users() {
   const [users, setUsers] = useState(UserData);
   const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
   const itemsPerPage = 16;
 
   const filterByStatus = (status: string) => {
@@ -39,6 +42,7 @@ export default function Users() {
     lastActiveDate: string;
     status: string;
   }
+
   return (
     <table className="absolute top-85 right-5 w-[80%] p-6 bg-white rounded-md font-montserrat text-[#213F7D]">
       <thead>
@@ -90,7 +94,8 @@ export default function Users() {
         {currentItems.map((user: User) => (
           <tr
             key={user.index}
-            className=" border-b-2 border-[#213F7D1A] hover:bg-[#21407d45] text-[#213F7D]"
+            onClick={() => router.push(`/users/${user.index}`)}
+            className=" border-b-2 border-[#213F7D1A] hover:bg-[#21407d45] text-[#213F7D] cursor-pointer"
           >
             <td className="px-2 py-4"> {user.orgName}</td>
             <td className="px-2 py-4">{user.userName}</td>

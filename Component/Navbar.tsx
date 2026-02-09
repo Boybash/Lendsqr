@@ -4,17 +4,20 @@ import React from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Bell } from "lucide-react";
+import Link from "next/link";
 export default function Navbar() {
   return (
     <nav className="w-full bg-[#213F7D] p-5 flex items-center justify-center lg:justify-between">
-      <Image
-        className="p-2 bg-white rounded-sm"
-        src="/Group.png"
-        alt="Next.js logo"
-        width={150}
-        height={20}
-        priority
-      />
+      <Link href="/">
+        <Image
+          className="p-2 bg-white rounded-sm"
+          src="/Group.png"
+          alt="Next.js logo"
+          width={150}
+          height={20}
+          priority
+        />
+      </Link>
 
       <input
         type="text"
